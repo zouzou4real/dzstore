@@ -1,0 +1,31 @@
+{% extends "accounts/base_auth.html" %}
+
+{% block title %}Create account — DZSTORE{% endblock %}
+
+{% block auth_subtitle %}
+    <p class="auth-subtitle">Create your client account. Password: 1 uppercase + 1 number. Age 18+.</p>
+{% endblock %}
+
+{% block auth_form %}
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-error">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+    </form>
+{% endblock %}
+
+{% block auth_footer %}
+    <p style="text-align:center; margin-top:20px; font-size:14px; color:#64748b;">
+        Already have an account? <a href="{% url 'login' %}" style="color:var(--primary); font-weight:600; text-decoration:none;">Sign in</a>
+    </p>
+{% endblock %}

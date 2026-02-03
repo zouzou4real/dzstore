@@ -1,0 +1,39 @@
+{% extends "accounts/base_client.html" %}
+
+{% block title %}Wishlist — DZSTORE{% endblock %}
+
+{% block content_inner %}
+    <h2 class="page-title">My wishlist</h2>
+
+    {% if wishlist_items %}
+        <div class="wishlist-grid">
+            {% for item in wishlist_items %}
+                {% with p=item.product %}
+                <div class="wishlist-card">
+                    <div class="thumb-wrap">
+                        {% if p.image %}
+                            <img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy">
+                        {% else %}
+                            <span class="thumb-placeholder">No image</span>
+                        {% endif %}
+                    </div>
+                    <div class="body">
+                        <h3>{{ p.name }}</h3>
+                        <div class="seller-name">{{ p.publisher_name }} · {{ p.get_category_display }}</div>
+                        <div class="price">{{ p.price }} DZD</div>
+                        <form method="post" action="{% url 'remove_from_wishlist' p.id %}" style="margin:0; margin-top:auto;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%;">🗑 Remove</button>
+                        </form>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>Your wishlist is empty.</p>
+            <a href="{% url 'home_client' %}">Browse sellers and add products →</a>
+        </div>
+    {% endif %}
+{% endblock %}

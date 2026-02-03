@@ -1,0 +1,30 @@
+{% extends "accounts/base.html" %}
+
+{% block nav %}
+<nav class="nav">
+    <a href="{% url 'home_client' %}" class="nav-link">Home</a>
+    <a href="{% url 'profile_client' %}" class="nav-link">{{ user.username }}</a>
+    <a href="{% url 'cart' %}" class="nav-link">Cart</a>
+    <a href="{% url 'wishlist' %}" class="nav-link">Wishlist</a>
+    <a href="{% url 'feedback' %}" class="nav-link">Feedback</a>
+    <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+</nav>
+{% endblock %}
+
+{% block mobile_nav %}
+<div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'home_client' %}" class="nav-link">Home</a>
+    <a href="{% url 'profile_client' %}" class="nav-link">{{ user.username }}</a>
+    <a href="{% url 'cart' %}" class="nav-link">Cart</a>
+    <a href="{% url 'wishlist' %}" class="nav-link">Wishlist</a>
+    <a href="{% url 'feedback' %}" class="nav-link">Feedback</a>
+    <a href="{% url 'logout' %}" class="btn btn-outline" style="width: 100%; display: inline-block; text-align: center;">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container main-content">
+    {% block header_actions %}{% endblock %}
+    {% block content_inner %}{% endblock %}
+</div>
+{% endblock %}

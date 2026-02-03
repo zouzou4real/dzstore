@@ -1,0 +1,46 @@
+{% extends "accounts/base_client.html" %}
+
+{% block title %}Cart — {{ seller.business_name|default:seller.user.username }} — DZSTORE{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'client_seller_products' seller.id %}" class="btn btn-ghost">← Back to {{ seller.business_name|default:seller.user.username }}’s market</a>
+{% endblock %}
+
+{% block content_inner %}
+    <h2 class="page-title">Your cart</h2>
+    <p class="page-desc">Seller: {{ seller.business_name|default:seller.user.username }}</p>
+
+    <div class="card" style="max-width: 640px;">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line in cart_lines %}
+                        <tr>
+                            <td><strong>{{ line.product.name }}</strong></td>
+                            <td>{{ line.quantity }}</td>
+                            <td>{{ line.product.price }} DZD</td>
+                            <td>{{ line.subtotal }} DZD</td>
+                            <td>
+                                <form method="post" action="{% url 'cart_remove' line.product.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" style="padding:6px 12px; font-size:13px;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p style="margin-top:20px; font-size:18px; font-weight:700;">Total: {{ total }} DZD</p>
+        <a href="{% url 'checkout' %}" class="btn btn-primary" style="margin-top:16px; display:inline-block; text-decoration:none;">Proceed to payment</a>
+    </div>
+{% endblock %}

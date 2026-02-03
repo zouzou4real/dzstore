@@ -1,0 +1,58 @@
+{% extends "accounts/base_seller.html" %}
+
+{% block title %}Notifications — DZSTORE Seller{% endblock %}
+
+{% block content_inner %}
+    <h2 class="page-title">Notifications</h2>
+    <p class="page-desc">New orders and updates. You have {{ unread_count }} unread.</p>
+
+    {% if unread_count > 0 %}
+        <form method="post" action="{% url 'seller_notifications' %}" style="margin-bottom:20px;">
+            {% csrf_token %}
+            <input type="hidden" name="mark_completed" value="all">
+            <button type="submit" class="btn btn-primary">Mark all as completed</button>
+        </form>
+    {% endif %}
+
+    <div class="card" style="max-width: 640px;">
+        {% if notifications %}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for n in notifications %}
+                            <tr class="{% if not n.is_read %}notification-unread{% endif %}">
+                                <td>
+                                    <strong>{{ n.message }}</strong>
+                                    {% if not n.is_read %}<span class="badge-unread">New</span>{% endif %}
+                                </td>
+                                <td style="white-space:nowrap; font-size:13px; color:#64748b;">{{ n.created_at|date:"M j, Y H:i" }}</td>
+                                <td>
+                                    {% if not n.is_read %}
+                                        <form method="post" action="{% url 'seller_notification_mark_read' n.id %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-ghost" style="padding:6px 12px; font-size:13px;">Mark as completed</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p style="color:#64748b; padding:24px; text-align:center;">No notifications yet. You’ll see new orders here.</p>
+        {% endif %}
+    </div>
+
+    <style>
+        .notification-unread { background: #f0f9ff; }
+        .badge-unread { font-size:11px; padding:2px 6px; background: var(--primary); color:#fff; border-radius:4px; margin-left:6px; }
+    </style>
+{% endblock %}

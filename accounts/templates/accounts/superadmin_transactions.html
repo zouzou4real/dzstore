@@ -1,0 +1,59 @@
+{% extends "accounts/base_superadmin.html" %}
+
+{% block title %}Transactions — DZSTORE Superadmin{% endblock %}
+
+{% block header_title %}Transactions{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'superadmin_home' %}" class="btn btn-ghost">← Dashboard</a>
+{% endblock %}
+
+{% block content %}
+    <h2 class="page-title">All transactions (orders)</h2>
+    <p class="page-desc">Archive of every order placed by clients.</p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Client</th>
+                    <th>Seller</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><strong>#{{ order.pk }}</strong></td>
+                        <td>{{ order.client.username }}{% if order.client.email %} <span style="color:#64748b; font-size:12px;">({{ order.client.email }})</span>{% endif %}</td>
+                        <td>{{ order.seller.user.username }}{% if order.seller.business_name %} <span style="color:#64748b; font-size:12px;">({{ order.seller.business_name }})</span>{% endif %}</td>
+                        <td><strong>{{ order.total_amount }} DZD</strong></td>
+                        <td style="white-space:nowrap; font-size:13px; color:#64748b;">{{ order.created_at|date:"M j, Y H:i" }}</td>
+                        <td>
+                            <ul style="margin:0; padding-left:16px; font-size:13px; color:#475569;">
+                                {% for oi in order.order_items.all %}
+                                    <li>{{ oi.product.name }} × {{ oi.quantity }} — {{ oi.subtotal }} DZD</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="empty-row">
+                        <td colspan="7">No orders yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .status-badge { display:inline-block; padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; }
+        .status-pending { background:#fef3c7; color:#92400e; }
+        .status-confirmed { background:#dbeafe; color:#1e40af; }
+        .status-completed { background:#dcfce7; color:#166534; }
+        .status-cancelled { background:#fee2e2; color:#991b1b; }
+    </style>
+{% endblock %}

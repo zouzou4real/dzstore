@@ -1,0 +1,32 @@
+{% extends "accounts/base.html" %}
+
+{% block nav %}
+<nav class="nav">
+    <a href="{% url 'home_seller' %}" class="nav-link">Home</a>
+    <a href="{% url 'seller_profile' %}" class="nav-link">Profile</a>
+    <a href="{% url 'seller_products' %}" class="nav-link">Products</a>
+    <a href="{% url 'seller_product_add' %}" class="nav-link">Add Product</a>
+    <a href="{% url 'seller_notifications' %}" class="nav-link">Notifications{% if seller_unread_notifications %} ({{ seller_unread_notifications }}){% endif %}</a>
+    <a href="{% url 'feedback' %}" class="nav-link">Feedback</a>
+    <a href="{% url 'seller_logout' %}" class="btn btn-outline">Logout</a>
+</nav>
+{% endblock %}
+
+{% block mobile_nav %}
+<div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'home_seller' %}" class="nav-link">Home</a>
+    <a href="{% url 'seller_profile' %}" class="nav-link">Profile</a>
+    <a href="{% url 'seller_products' %}" class="nav-link">Products</a>
+    <a href="{% url 'seller_product_add' %}" class="nav-link">Add Product</a>
+    <a href="{% url 'seller_notifications' %}" class="nav-link">Notifications{% if seller_unread_notifications %} ({{ seller_unread_notifications }}){% endif %}</a>
+    <a href="{% url 'feedback' %}" class="nav-link">Feedback</a>
+    <a href="{% url 'seller_logout' %}" class="btn btn-outline" style="width: 100%; display: inline-block; text-align: center;">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container main-content">
+    {% block header_actions %}{% endblock %}
+    {% block content_inner %}{% endblock %}
+</div>
+{% endblock %}

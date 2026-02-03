@@ -1,0 +1,62 @@
+{% extends "accounts/base_client.html" %}
+
+{% block title %}Update profile — DZSTORE{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'profile_client' %}" class="btn btn-ghost">← Back to profile</a>
+    <a href="{% url 'client_password_change' %}" class="btn btn-ghost">Change password</a>
+{% endblock %}
+
+{% block content_inner %}
+    <div class="card" style="max-width: 560px;">
+        <div class="card-header">
+            <h2>Update your profile</h2>
+            <p class="card-subtitle">Age 18+. New password: 1 uppercase + 1 number.</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>👤 First name</label>
+                {{ form.first_name }}
+                {% if form.first_name.help_text %}<span class="helptext">{{ form.first_name.help_text }}</span>{% endif %}
+                {{ form.first_name.errors }}
+            </div>
+            <div class="form-group">
+                <label>👤 Last name</label>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+            <div class="form-group">
+                <label>🔑 Username</label>
+                {{ form.username }}
+                {% if form.username.help_text %}<span class="helptext">{{ form.username.help_text }}</span>{% endif %}
+                {{ form.username.errors }}
+            </div>
+            <div class="form-group">
+                <label>📧 Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div class="form-group">
+                <label>🎂 Age</label>
+                {{ form.age }}
+                {{ form.age.errors }}
+            </div>
+            <div class="form-group">
+                <label>🔒 New password <span style="font-weight:400; color:#94a3b8;">(optional)</span></label>
+                {{ form.new_password }}
+                {% if form.new_password.help_text %}<span class="helptext">{{ form.new_password.help_text }}</span>{% endif %}
+                {{ form.new_password.errors }}
+            </div>
+            <div class="form-group">
+                <label>🔒 Confirm new password</label>
+                {{ form.new_password2 }}
+                {{ form.new_password2.errors }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <a href="{% url 'profile_client' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

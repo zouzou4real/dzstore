@@ -1,0 +1,35 @@
+{% extends "accounts/base_superadmin.html" %}
+
+{% block title %}Profile — DZSTORE Superadmin{% endblock %}
+
+{% block header_title %}Profile{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'superadmin_home' %}" class="btn btn-ghost">← Dashboard</a>
+{% endblock %}
+
+{% block content %}
+    <h2 class="page-title">Your information</h2>
+
+    <div class="card" style="max-width: 480px;">
+        <div class="info-group">
+            <div class="label">Username</div>
+            <div class="value">{{ user.username }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">Email</div>
+            <div class="value">{{ user.email|default:"—" }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">Password</div>
+            <div class="value" style="color:#94a3b8; letter-spacing:2px;">••••••••</div>
+            <p class="helptext" style="margin-top:8px;"><a href="{% url 'superadmin_password_change' %}">Change password</a></p>
+        </div>
+        {% if user.last_login %}
+        <div class="info-group">
+            <div class="label">Last login</div>
+            <div class="value">{{ user.last_login|date:"F j, Y, g:i a" }}</div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

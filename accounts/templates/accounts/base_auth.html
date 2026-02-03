@@ -1,0 +1,30 @@
+{% extends "accounts/base.html" %}
+
+{% block nav %}
+<nav class="nav">
+    <a href="{% url 'landing' %}" class="nav-link">Home</a>
+    <a href="{% url 'login' %}" class="nav-link">Client login</a>
+    <a href="{% url 'seller_login' %}" class="nav-link">Seller login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary">Sign up</a>
+</nav>
+{% endblock %}
+
+{% block mobile_nav %}
+<div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'landing' %}" class="nav-link">Home</a>
+    <a href="{% url 'login' %}" class="nav-link">Client login</a>
+    <a href="{% url 'seller_login' %}" class="nav-link">Seller login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary" style="width: 100%; display: inline-block; text-align: center;">Sign up</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-logo">DZSTORE</div>
+        {% block auth_subtitle %}{% endblock %}
+        {% block auth_form %}{% endblock %}
+        {% block auth_footer %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

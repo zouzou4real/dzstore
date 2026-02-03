@@ -1,0 +1,454 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}DZSTORE – Buy from local sellers, sell to more clients{% endblock %}
+
+{% block nav %}
+<nav class="nav">
+    <a href="{% url 'login' %}" class="nav-link">Client login</a>
+    <a href="{% url 'seller_login' %}" class="nav-link">Seller login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary">Sign up</a>
+</nav>
+{% endblock %}
+
+{% block mobile_nav %}
+<div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'login' %}" class="nav-link">Client login</a>
+    <a href="{% url 'seller_login' %}" class="nav-link">Seller login</a>
+    <a href="{% url 'register' %}" class="btn btn-primary" style="width: 100%; display: inline-block; text-align: center;">Sign up</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<style>
+.why-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.why-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.why-number {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    font-size: 1.75rem;
+    font-weight: 700;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.why-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.why-content p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Contact section improvements */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+}
+
+.contact-item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #4f46e5;
+    stroke-width: 2.5;
+}
+
+.contact-item span {
+    color: #334155;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.contact-info h3 {
+    color: #1e293b;
+    margin-bottom: 1.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Overall warmth and personality improvements */
+.section-header h2 {
+    color: #0f172a;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.section-header p {
+    color: #475569;
+    font-size: 1.125rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.feature-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #6366f1;
+    stroke-width: 2.5;
+}
+
+.feature-card h3 {
+    color: #1e293b;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+.feature-card p {
+    color: #64748b;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #6366f1;
+}
+
+.testimonial-card blockquote {
+    color: #334155;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-avatar {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    font-weight: 600;
+}
+
+.testimonial-name {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.testimonial-role {
+    color: #6366f1;
+    font-weight: 500;
+}
+</style>
+
+<section class="hero">
+    <div class="container">
+        <span class="hero-badge">For Buyers & Sellers</span>
+        <h1>One platform for buyers and sellers</h1>
+        <p>DZSTORE connects you with trusted local sellers. Find what you need, or grow your business by reaching more clients – simply and securely.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'register' %}" class="btn btn-primary">Sign up as Client</a>
+            <a href="{% url 'seller_register' %}" class="btn btn-outline">Sign up as Seller</a>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our services – for clients</h2>
+            <p>Shopping on DZSTORE is easy, safe, and convenient. Here's what you get.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                </div>
+                <h3>Easy discovery</h3>
+                <p>Browse products from multiple sellers in one place. Find what you need without visiting many different sites.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                </div>
+                <h3>Trusted sellers</h3>
+                <p>We work with verified sellers so you can shop with confidence. Your orders and payments are handled securely.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1"></circle>
+                        <circle cx="19" cy="21" r="1"></circle>
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    </svg>
+                </div>
+                <h3>Simple checkout</h3>
+                <p>Add to cart, choose your seller, and pay in one flow. Save time and keep track of your orders easily.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                    </svg>
+                </div>
+                <h3>Wishlist & favorites</h3>
+                <p>Save products you like and come back later. Your wishlist helps you compare and buy when you're ready.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our services – for sellers</h2>
+            <p>Grow your business with tools designed for exhibitors and providers.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+                <h3>More visibility</h3>
+                <p>Your products appear in front of clients who are actively looking. Get discovered without extra advertising.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"></path>
+                        <path d="m19 9-5 5-4-4-3 3"></path>
+                    </svg>
+                </div>
+                <h3>Reach more clients</h3>
+                <p>One platform, many buyers. Expand your audience and increase sales without managing multiple channels.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m7.5 4.27 9 5.15"></path>
+                        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                        <path d="m3.3 7 8.7 5 8.7-5"></path>
+                        <path d="M12 22V12"></path>
+                    </svg>
+                </div>
+                <h3>Simple management</h3>
+                <p>Add, edit, and manage your products and stock in one dashboard. Stay in control without complexity.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                    </svg>
+                </div>
+                <h3>Orders & notifications</h3>
+                <p>Get notified when clients order. See orders and updates in one place so you never miss a sale.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why choose us</h2>
+            <p>We focus on what matters: a reliable, easy-to-use platform for everyone.</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-number">1</div>
+                <div class="why-content">
+                    <h3>Trust and safety</h3>
+                    <p>Verified sellers and secure flows so clients and sellers can work with confidence.</p>
+                </div>
+            </div>
+            <div class="why-card">
+                <div class="why-number">2</div>
+                <div class="why-content">
+                    <h3>Simple to use</h3>
+                    <p>Clear interface and straightforward steps. No need for technical skills to get started.</p>
+                </div>
+            </div>
+            <div class="why-card">
+                <div class="why-number">3</div>
+                <div class="why-content">
+                    <h3>Built for both sides</h3>
+                    <p>One place for buyers and sellers. Everyone gets the right tools and information.</p>
+                </div>
+            </div>
+            <div class="why-card">
+                <div class="why-number">4</div>
+                <div class="why-content">
+                    <h3>Reliable and fast</h3>
+                    <p>Stable platform and quick updates so you can focus on shopping or selling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>What our users say</h2>
+            <p>Real feedback from clients and sellers who use DZSTORE.</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <blockquote>"I found several sellers I like in one place. Ordering is straightforward and I feel safe with my payments."</blockquote>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">SM</div>
+                    <div>
+                        <div class="testimonial-name">Sarah M.</div>
+                        <div class="testimonial-role">Client</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <blockquote>"Since I joined DZSTORE, more people see my products. Managing my catalog and orders is easy."</blockquote>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">KB</div>
+                    <div>
+                        <div class="testimonial-name">Karim B.</div>
+                        <div class="testimonial-role">Seller</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <blockquote>"Clear layout, no confusion. I can compare sellers and prices without wasting time."</blockquote>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">LK</div>
+                    <div>
+                        <div class="testimonial-name">Lina K.</div>
+                        <div class="testimonial-role">Client</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <blockquote>"Notifications for new orders work well. I keep everything under control from one dashboard."</blockquote>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">OT</div>
+                    <div>
+                        <div class="testimonial-name">Omar T.</div>
+                        <div class="testimonial-role">Seller</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <h2>Contact us</h2>
+            <p>Questions or feedback? We're here to help.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Get in touch</h3>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                    </svg>
+                    <span>contact@dzstore.example</span>
+                </div>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    <span>+213 555 123 456</span>
+                </div>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>We aim to reply within 24 hours on working days.</span>
+                </div>
+            </div>
+            <form class="contact-form" id="contact-form" method="post" action="{% url 'landing' %}#contact">
+                {% csrf_token %}
+                {{ landing_contact_form.non_field_errors }}
+                <div class="form-group">
+                    <label for="id_name">Your name</label>
+                    {{ landing_contact_form.name }}
+                    {{ landing_contact_form.name.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {{ landing_contact_form.email }}
+                    {{ landing_contact_form.email.errors }}
+                </div>
+                <div class="form-group">
+                    <label for="id_message">Message</label>
+                    {{ landing_contact_form.message }}
+                    {{ landing_contact_form.message.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Join DZSTORE today</h2>
+        <p>Create your account and start shopping or selling in minutes.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'register' %}" class="btn btn-primary">Sign up as Client</a>
+            <a href="{% url 'seller_register' %}" class="btn btn-outline">Sign up as Seller</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "accounts/base_superadmin.html" %}
+
+{% block title %}Feedback — DZSTORE Superadmin{% endblock %}
+
+{% block header_title %}Feedback{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'superadmin_home' %}" class="btn btn-ghost">← Dashboard</a>
+{% endblock %}
+
+{% block content %}
+    <h2 class="page-title">All feedback</h2>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Who</th>
+                    <th>Feedback</th>
+                    <th>When</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fb in feedback_list %}
+                    <tr>
+                        <td>{{ fb.user.username }}{% if fb.user.email %} <span style="color:#64748b; font-size:12px;">({{ fb.user.email }})</span>{% endif %}</td>
+                        <td style="max-width:320px; word-break:break-word;">{{ fb.text }}</td>
+                        <td style="white-space:nowrap; font-size:13px; color:#64748b;">{{ fb.created_at|date:"M j, Y g:i A" }}</td>
+                        <td>
+                            <form method="post" action="{% url 'superadmin_feedback_delete' fb.id %}" style="display:inline;" onsubmit="return confirm('Delete this feedback?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="empty-row"><td colspan="4">No feedback yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

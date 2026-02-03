@@ -1,0 +1,44 @@
+{% extends base_template %}
+
+{% block title %}Feedback — DZSTORE{% endblock %}
+
+{% block content_inner %}
+<div class="feedback-section">
+    <div class="add-feedback">
+        <h3>Add your feedback</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field-wrap">
+                {{ form.text }}
+                {{ form.text.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="feedback-list">
+        <h3>Feedback from others</h3>
+        {% for item in feedback_list %}
+            <div class="feedback-item">
+                <div class="feedback-meta">
+                    <span class="feedback-username">{{ item.display_name }}</span>
+                    <span class="feedback-type {% if item.is_seller %}seller{% else %}client{% endif %}">
+                        {% if item.is_seller %}Seller{% else %}Client{% endif %}
+                    </span>
+                </div>
+                <p class="feedback-text">{{ item.fb.text }}</p>
+                <div class="feedback-item-footer">
+                    <span class="feedback-date">{{ item.fb.created_at|date:"M d, Y H:i" }}</span>
+                    {% if item.is_own %}
+                        <form method="post" action="{% url 'feedback_delete' item.fb.id %}" style="display:inline;" onsubmit="return confirm('Delete this feedback?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete my feedback</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty-state" style="margin-top:0;">No feedback yet. Be the first to share!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

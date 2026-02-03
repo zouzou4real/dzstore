@@ -1,0 +1,171 @@
+{% extends "accounts/base_seller.html" %}
+
+{% block title %}Seller home — DZSTORE{% endblock %}
+
+{% block content_inner %}
+
+    <h2 class="page-title">Welcome back</h2>
+    <p class="page-desc">Manage your profile, products, and feedback from the menu above.</p>
+
+    <section class="seller-dashboard" aria-label="Seller statistics">
+        <h3 class="dashboard-heading">Dashboard</h3>
+        <div class="dashboard-grid">
+            <div class="stat-card stat-card--products">
+                <div class="stat-card__header">
+                    <span class="stat-card__emoji">📦</span>
+                </div>
+                <div class="number">{{ products_count }}</div>
+                <div class="label">Active products</div>
+            </div>
+            <div class="stat-card stat-card--orders">
+                <div class="stat-card__header">
+                    <span class="stat-card__emoji">🛒</span>
+                </div>
+                <div class="number">{{ orders_count }}</div>
+                <div class="label">Total orders</div>
+            </div>
+            <div class="stat-card stat-card--pending">
+                <div class="stat-card__header">
+                    <span class="stat-card__emoji">⏳</span>
+                </div>
+                <div class="number">{{ pending_orders_count }}</div>
+                <div class="label">Pending orders</div>
+            </div>
+            <div class="stat-card stat-card--completed">
+                <div class="stat-card__header">
+                    <span class="stat-card__emoji">✅</span>
+                </div>
+                <div class="number">{{ completed_orders_count }}</div>
+                <div class="label">Completed orders</div>
+            </div>
+            <div class="stat-card stat-card--sales">
+                <div class="stat-card__header">
+                    <span class="stat-card__emoji">💰</span>
+                </div>
+                <div class="number">{{ total_sales|floatformat:2 }}</div>
+                <div class="label">Total sales (completed)</div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .seller-dashboard {
+            margin-top: 2rem;
+        }
+
+        .seller-dashboard .dashboard-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #111827;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .seller-dashboard .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .seller-dashboard .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.75rem;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .seller-dashboard .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, currentColor, currentColor);
+            opacity: 0.8;
+        }
+
+        .seller-dashboard .stat-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+            border-color: currentColor;
+        }
+
+        .seller-dashboard .stat-card--products {
+            color: #3b82f6;
+        }
+
+        .seller-dashboard .stat-card--orders {
+            color: #8b5cf6;
+        }
+
+        .seller-dashboard .stat-card--pending {
+            color: #f59e0b;
+        }
+
+        .seller-dashboard .stat-card--completed {
+            color: #10b981;
+        }
+
+        .seller-dashboard .stat-card--sales {
+            color: #ec4899;
+        }
+
+        .seller-dashboard .stat-card__header {
+            margin-bottom: 1rem;
+        }
+
+        .seller-dashboard .stat-card__emoji {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            font-size: 2.5rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            border: 2px solid currentColor;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .seller-dashboard .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .seller-dashboard .label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .seller-dashboard .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .seller-dashboard .stat-card {
+                padding: 1.25rem;
+            }
+
+            .seller-dashboard .number {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .seller-dashboard .dashboard-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+{% endblock %}

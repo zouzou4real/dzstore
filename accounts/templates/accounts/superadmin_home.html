@@ -1,0 +1,300 @@
+{% extends "accounts/base_superadmin.html" %}
+
+{% block title %}Dashboard — DZSTORE Superadmin{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-header {
+        margin-bottom: 32px;
+    }
+    
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a202c;
+        margin: 0 0 8px 0;
+    }
+    
+    .page-subtitle {
+        font-size: 14px;
+        color: #718096;
+        margin: 0;
+    }
+    
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+    
+    .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 10px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card:nth-child(2) {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .stat-card:nth-child(3) {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 16px 32px rgba(0, 0, 0, 0.08);
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+    }
+    
+    .stat-card .icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .stat-card .icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    
+    .stat-card .number {
+        font-size: 36px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+        line-height: 1;
+    }
+    
+    .stat-card .label {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2d3748;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .section-title svg {
+        width: 20px;
+        height: 20px;
+        stroke: #667eea;
+    }
+    
+    .table-wrap {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    thead {
+        background: linear-gradient(to right, #f7fafc, #edf2f7);
+    }
+    
+    th {
+        padding: 16px 20px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        color: #4a5568;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    
+    tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.15s ease;
+    }
+    
+    tbody tr:last-child {
+        border-bottom: none;
+    }
+    
+    tbody tr:hover {
+        background-color: #f8fafc;
+    }
+    
+    td {
+        padding: 16px 20px;
+        font-size: 14px;
+        color: #2d3748;
+    }
+    
+    td:first-child {
+        font-weight: 500;
+        color: #1a202c;
+    }
+    
+    td:last-child {
+        font-weight: 600;
+        color: #667eea;
+    }
+    
+    .empty-row td {
+        text-align: center;
+        padding: 40px 20px;
+        color: #a0aec0;
+        font-style: italic;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        background: #edf2f7;
+        color: #4a5568;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .page-title {
+            font-size: 24px;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+        }
+        
+        table {
+            font-size: 13px;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+        }
+    }
+</style>
+
+<div class="dashboard-header">
+    <h2 class="page-title">Dashboard Overview</h2>
+    <p class="page-subtitle">Monitor your platform's key metrics and seller activity</p>
+</div>
+
+<div class="dashboard-grid">
+    <div class="stat-card">
+        <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+        </div>
+        <div class="number">{{ clients_count }}</div>
+        <div class="label">Active Clients</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 7h-9"></path>
+                <path d="M14 17H5"></path>
+                <circle cx="17" cy="17" r="3"></circle>
+                <circle cx="7" cy="7" r="3"></circle>
+            </svg>
+        </div>
+        <div class="number">{{ sellers_count }}</div>
+        <div class="label">Active Sellers</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </div>
+        <div class="number">{{ feedback_count }}</div>
+        <div class="label">Feedback Entries</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <h3 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+        </svg>
+        Products per Seller
+    </h3>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Seller Username</th>
+                <th>Business Name</th>
+                <th>Total Products</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in sellers_with_products %}
+                <tr>
+                    <td>{{ s.user.username }}</td>
+                    <td>{{ s.business_name|default:"—" }}</td>
+                    <td>{{ s.product_count }}</td>
+                </tr>
+            {% empty %}
+                <tr class="empty-row">
+                    <td colspan="3">No sellers registered yet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<style>
+  /* Minimal sidebar styles for seller pages (kept small to avoid conflicts) */
+  .seller-layout { display:flex; min-height:100vh; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  .seller-nav { width:240px; background:linear-gradient(180deg,#e67e22,#d35400); color:#fff; padding:20px 16px; box-shadow:2px 0 10px rgba(0,0,0,0.08); }
+  .seller-nav a { color: white; text-decoration: none; display:block; padding:10px 8px; border-radius:8px; margin-bottom:8px; }
+  .seller-nav .brand { font-weight:700; font-size:18px; padding:8px 0 16px 0; }
+  .seller-main { flex:1; padding:24px; background:#f5f7fa; }
+</style>
+
+<div class="seller-layout">
+  <aside class="seller-nav">
+    <div class="brand">DZSTORE — Seller</div>
+    <a href="{% url 'home_seller' %}">🏠 Home</a>
+    <a href="{% url 'seller_products' %}">📦 My Products</a>
+    <a href="{% url 'seller_product_add' %}">➕ Add Product</a>
+    <a href="{% url 'seller_profile' %}">👤 Profile</a>
+    <a href="{% url 'seller_update_profile' %}">✏️ Update Profile</a>
+    <a href="{% url 'seller_logout' %}">🚪 Logout</a>
+  </aside>
+  <main class="seller-main">
+    {% block seller_main_content %}{% endblock %}
+  </main>
+</div>

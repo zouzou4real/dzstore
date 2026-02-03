@@ -1,0 +1,30 @@
+{% extends "accounts/base_auth.html" %}
+
+{% block title %}Seller login — DZSTORE{% endblock %}
+
+{% block body_theme %}theme-seller{% endblock %}
+
+{% block auth_subtitle %}
+    <p class="auth-subtitle">Seller portal — Sign in</p>
+{% endblock %}
+
+{% block auth_form %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required placeholder="you@example.com" autofocus>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    </form>
+{% endblock %}
+
+{% block auth_footer %}
+    <p style="text-align:center; margin-top:20px; font-size:14px; color:#64748b;">
+        New seller? <a href="{% url 'seller_register' %}" style="color:var(--primary); font-weight:600; text-decoration:none;">Create seller account</a>
+    </p>
+{% endblock %}

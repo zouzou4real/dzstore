@@ -1,0 +1,45 @@
+{% extends "accounts/base_seller.html" %}
+
+{% block title %}Seller profile — DZSTORE{% endblock %}
+
+{% block header_actions %}
+    <a href="{% url 'seller_update_profile' %}" class="btn btn-ghost">✏️ Update profile</a>
+{% endblock %}
+
+{% block content_inner %}
+    <div class="card" style="max-width: 560px;">
+        <div class="card-header">
+            <div class="profile-avatar">{{ user.username|first|upper }}</div>
+            <h2>Seller account details</h2>
+            <p class="card-subtitle">Your seller information</p>
+        </div>
+        <div class="info-group">
+            <div class="label">👤 First name</div>
+            <div class="value">{{ user.first_name|default:"—" }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">👤 Last name</div>
+            <div class="value">{{ user.last_name|default:"—" }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">🔑 Username</div>
+            <div class="value">{{ user.username }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">📧 Email</div>
+            <div class="value">{{ user.email }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">🏢 Business name</div>
+            <div class="value">{{ user.seller_profile.business_name|default:"—" }}</div>
+        </div>
+        <div class="info-group">
+            <div class="label">📞 Phone</div>
+            <div class="value">{{ user.seller_profile.phone_number|default:"—" }}</div>
+        </div>
+        <div class="form-actions" style="margin-top: 1rem; gap: 0.75rem;">
+            <a href="{% url 'seller_update_profile' %}" class="btn btn-primary">Update profile</a>
+            <a href="{% url 'seller_password_change' %}" class="btn btn-secondary">Change password</a>
+        </div>
+    </div>
+{% endblock %}
